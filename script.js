@@ -15,6 +15,15 @@ function setMovieData(movieIndex, moviePrice) {
   localStorage.setItem("selectedMoviePrice", moviePrice);
 }
 
+// Change screen image
+function setMovieClass(screenClass) {
+  screen.className = "screen";
+  let movieClass = "movie-" + movieSelect.selectedIndex;
+  screen.classList.add(movieClass);
+
+  localStorage.setItem("selectedMovieClass", movieClass);
+}
+
 // Update total and count
 function updateSelectedCount() {
   const selectedSeats = document.querySelectorAll(".row .seat.selected");
@@ -42,22 +51,20 @@ function populateUI() {
   }
 
   const selectedMovieIndex = localStorage.getItem("selectedMovieIndex");
+  const selectedMovieClass = localStorage.getItem("selectedMovieClass");
 
   if (selectedMovieIndex !== null) {
     movieSelect.selectedIndex = selectedMovieIndex;
+    setMovieClass();
   }
 }
 
 // Movie select event
 movieSelect.addEventListener("change", (e) => {
-  // Change screen image
-  screen.className = "screen";
-  let movieClass = "movie-" + movieSelect.selectedIndex;
-  screen.classList.add(movieClass);
-
   ticketPrice = +e.target.value;
   setMovieData(e.target.selectedIndex, e.target.value);
   updateSelectedCount();
+  setMovieClass();
 });
 
 // Seat click event
